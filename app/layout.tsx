@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ReactNode } from "react";
 import WrapperProvider from "@/components/providers/WrapperProvider";
+import Header from "@/components/layout/Header";
 
 
 export const metadata: Metadata = {
@@ -18,7 +19,10 @@ const RootLayout=({
   return (
     <html lang="en">
       <body>
-        <WrapperProvider>{children}</WrapperProvider>
+        <WrapperProvider>
+          <Header />
+          {children}
+        </WrapperProvider>
       </body>
     </html>
   );

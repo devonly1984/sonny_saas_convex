@@ -15,6 +15,7 @@ import type {
 } from "convex/server";
 import type * as constants from "../constants.js";
 import type * as mutations_users from "../mutations/users.js";
+import type * as mutations_waitingList from "../mutations/waitingList.js";
 import type * as queries_events from "../queries/events.js";
 import type * as queries_storage from "../queries/storage.js";
 import type * as queries_tickets from "../queries/tickets.js";
@@ -35,6 +36,7 @@ import type * as tables_waitingList from "../tables/waitingList.js";
 declare const fullApi: ApiFromModules<{
   constants: typeof constants;
   "mutations/users": typeof mutations_users;
+  "mutations/waitingList": typeof mutations_waitingList;
   "queries/events": typeof queries_events;
   "queries/storage": typeof queries_storage;
   "queries/tickets": typeof queries_tickets;

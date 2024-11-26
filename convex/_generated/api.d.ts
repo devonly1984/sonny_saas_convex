@@ -13,8 +13,12 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as constants from "../constants.js";
 import type * as mutations_users from "../mutations/users.js";
 import type * as queries_events from "../queries/events.js";
+import type * as queries_storage from "../queries/storage.js";
+import type * as queries_tickets from "../queries/tickets.js";
+import type * as queries_waitingList from "../queries/waitingList.js";
 import type * as tables_events from "../tables/events.js";
 import type * as tables_tickets from "../tables/tickets.js";
 import type * as tables_users from "../tables/users.js";
@@ -29,8 +33,12 @@ import type * as tables_waitingList from "../tables/waitingList.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  constants: typeof constants;
   "mutations/users": typeof mutations_users;
   "queries/events": typeof queries_events;
+  "queries/storage": typeof queries_storage;
+  "queries/tickets": typeof queries_tickets;
+  "queries/waitingList": typeof queries_waitingList;
   "tables/events": typeof tables_events;
   "tables/tickets": typeof tables_tickets;
   "tables/users": typeof tables_users;

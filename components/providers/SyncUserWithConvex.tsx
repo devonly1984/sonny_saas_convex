@@ -8,8 +8,8 @@ import { useEffect } from "react";
 
 const SyncUserWithConvex = () => {
   const { user } = useUser();
-
   const updateUser = useMutation(api.mutations.users.updateUser);
+  
   useEffect(() => {
     if (!user) return;
     const syncUser = async () => {
@@ -24,7 +24,7 @@ const SyncUserWithConvex = () => {
       }
     };
     syncUser();
-  }, [user]);
-  return <div>SyncUserWithConvex</div>;
+  }, [user, updateUser]);
+  return null;
 }
 export default SyncUserWithConvex

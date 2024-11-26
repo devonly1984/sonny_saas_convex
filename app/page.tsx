@@ -1,7 +1,9 @@
+import EventList from "@/components/event/EventList";
+
 const HomePage = () => {
   return (
     <div>
-      <h1>Welcome to ticketr</h1>
+      <EventList />
     </div>
   );
 };

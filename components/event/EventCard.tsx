@@ -8,7 +8,7 @@ import { useQuery } from "convex/react";
 import { CalendarDays, Check, CircleArrowRight, LoaderCircle, MapPin, PencilIcon, StarIcon, Ticket, XCircle } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import PurchaseTicket from "./PurchaseTicket";
+import PurchaseTicket from "../tickets/PurchaseTicket";
 
 const EventCard = ({ eventId }: { eventId: Id<"events"> }) => {
   const { user } = useUser();

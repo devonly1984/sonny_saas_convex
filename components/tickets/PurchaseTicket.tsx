@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import ReleaseTicket from "./ReleaseTicket";
 
 const PurchaseTicket = ({eventId}:{eventId:Id<'events'>}) => {
-  console.log(eventId);
+
   const { user } = useUser();
   const router = useRouter();
   const queuePosition = useQuery(api.queries.waitingList.getQueuePosition, {
@@ -42,7 +42,9 @@ const PurchaseTicket = ({eventId}:{eventId:Id<'events'>}) => {
     return () => clearInterval(interval);
   }, [offerExpiresAt, isExpired]);
   //stripe checkout
-  const handlePurchase = async () => {};
+  const handlePurchase = async () => {
+    
+  };
   if (!user || !queuePosition || queuePosition.status !== "offered") {
     return null;
   }

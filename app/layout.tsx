@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 
 import SyncUserWithConvex from "@/components/providers/SyncUserWithConvex";
 import WrapperProvider from "@/components/providers/WrapperProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Ticket Clone",
@@ -24,6 +25,7 @@ const RootLayout = ({
           <Header />
           <SyncUserWithConvex />
           {children}
+          <Toaster />
         </WrapperProvider>
       </body>
     </html>

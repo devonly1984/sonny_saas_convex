@@ -4,7 +4,7 @@ import { api } from "@/convex/_generated/api";
 import { useQuery } from "convex/react";
 import Spinner from "../shared/Spinner";
 import { CalendarDays, Ticket } from "lucide-react";
-import EventCard from "./EventCard";
+import { EventCard } from "./";
 
 
 const EventList = () => {

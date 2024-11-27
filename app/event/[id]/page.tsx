@@ -1,7 +1,5 @@
 "use client"
-
-import EventCard from "@/components/event/EventCard";
-import JoinQueue from "@/components/event/JoinQueue";
+import { EventCard, JoinQueue } from "@/components/event";
 import Spinner from "@/components/shared/Spinner";
 import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";

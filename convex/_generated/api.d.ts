@@ -20,6 +20,7 @@ import type * as mutations_waitingList from "../mutations/waitingList.js";
 import type * as queries_events from "../queries/events.js";
 import type * as queries_storage from "../queries/storage.js";
 import type * as queries_tickets from "../queries/tickets.js";
+import type * as queries_users from "../queries/users.js";
 import type * as queries_waitingList from "../queries/waitingList.js";
 import type * as tables_events from "../tables/events.js";
 import type * as tables_tickets from "../tables/tickets.js";
@@ -42,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   "queries/events": typeof queries_events;
   "queries/storage": typeof queries_storage;
   "queries/tickets": typeof queries_tickets;
+  "queries/users": typeof queries_users;
   "queries/waitingList": typeof queries_waitingList;
   "tables/events": typeof tables_events;
   "tables/tickets": typeof tables_tickets;

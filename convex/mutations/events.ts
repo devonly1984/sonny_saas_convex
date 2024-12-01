@@ -1,8 +1,9 @@
 import { mutation } from "../_generated/server";
 import { ConvexError, v } from "convex/values";
-import { DURATIONS, WAITING_LIST_STATUS } from "../constants";
+import { DURATIONS, TICKET_STATUS, WAITING_LIST_STATUS } from "../constants";
 import { checkAvailability } from "../queries/events";
 import { internal } from "../_generated/api";
+import { processQueue } from "./waitingList";
 export const joinWaitingList = mutation({
     args:{
         eventId:v.id('events'),
@@ -113,5 +114,52 @@ export const updateEvent = mutation({
       }
       await ctx.db.patch(eventId,updates);
       return eventId;
+  },
+});
+export const purchaseTicket = mutation({
+  args: {
+    eventId: v.id("events"),
+    userId: v.string(),
+    waitingListId: v.id("waitingList"),
+    paymentInfo: v.object({
+      paymentIntentId: v.string(),
+      amount: v.number(),
+    }),
+  },
+  handler: async (ctx, { eventId, userId, waitingListId, paymentInfo }) => {
+    const waitingListentry = await ctx.db.get(waitingListId);
+    if (!waitingListentry) {
+      throw new Error("Waiting list entry not found");
+    }
+    if (waitingListentry.status !== WAITING_LIST_STATUS.OFFERED) {
+      throw new Error(
+        "Invalid waiting list status -- ticket offer may have expired"
+      );
+    }
+    if (waitingListentry.userId !==userId) {
+      throw new Error("Waiting list entry does not belong to this user");
+    }
+    const event = await ctx.db.get(eventId);
+    if (!event) throw new Error("Event not found");
+    if (event.is_cancelled) {
+      throw new Error("Event is no longer active");
+    }
+    try {
+      await ctx.db.insert('tickets',{
+        eventId,
+        userId,
+        purchasedAt: Date.now(),
+        status: TICKET_STATUS.VALID,
+        paymentIntentId: paymentInfo.paymentIntentId,
+        amount: paymentInfo.amount
+      })
+      await ctx.db.patch(waitingListId,{
+        status: WAITING_LIST_STATUS.PURCHASED
+      })
+      await processQueue(ctx, { eventId });
+    } catch (error) {
+      throw new Error(`Failed to process ticket purchase ${error}`);
+      
+    }
   },
 });

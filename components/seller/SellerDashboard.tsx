@@ -1,6 +1,13 @@
 "use client";
 
-import { AccountStatus, createStripeConnectCustomer, getStripeAccountLink, getStripeConnectAccountStatus, stripeConnectLoginLink } from "@/actions/stripe.actions";
+import {
+  
+  createStripeConnectCustomer,
+  createStripeAccountLink,
+  getStripeConnectAccountStatus,
+  stripeConnectLoginLink,
+} from "@/actions/stripe.actions";
+import { AccountStatus } from "@/types";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/nextjs";
 import { useQuery } from "convex/react";
@@ -236,7 +243,7 @@ const hanldeManageAccount =async()=>{
                         setError(false);
                         try {
                           const { url } =
-                            await getStripeAccountLink(stripeConnectId);
+                            await createStripeAccountLink(stripeConnectId);
                           router.push(url);
                         } catch (error) {
                           console.error("Error creating Account Link:", error);

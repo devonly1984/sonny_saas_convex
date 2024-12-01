@@ -7,6 +7,7 @@ import { Ticket } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { ReleaseTicket } from "@/components/tickets";
+import { createStripeCheckout } from "@/actions/stripe.actions";
 
 const PurchaseTicket = ({eventId}:{eventId:Id<'events'>}) => {
 
@@ -44,6 +45,20 @@ const PurchaseTicket = ({eventId}:{eventId:Id<'events'>}) => {
   //stripe checkout
   const handlePurchase = async () => {
     
+    if (!user) return;
+    try {
+      setIsLoading(true);
+      const {sessionUrl} = await createStripeCheckout({
+        eventId
+      })
+      if (sessionUrl) {
+        router.push(sessionUrl);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally{
+      setIsLoading(false)
+    }
   };
   if (!user || !queuePosition || queuePosition.status !== "offered") {
     return null;

@@ -93,7 +93,7 @@ try {
   throw new Error("Failed to fetch Stripe Connect Account status")
 }
 }
-export const getStripeAccountLink = async(account:string)=>{
+export const createStripeAccountLink = async(account:string)=>{
   try {
     const headersList = await headers();
     const origin = headersList.get('origin')||"";

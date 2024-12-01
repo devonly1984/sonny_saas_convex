@@ -12,7 +12,7 @@ export default defineTable({
     v.literal("cancelled")
   ),
   paymentIntentId: v.optional(v.string()),
-  amoutn: v.optional(v.number()),
+  amount: v.optional(v.number()),
 })
   .index("by_event", ["eventId"])
   .index("by_user", ["userId"])

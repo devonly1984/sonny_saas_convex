@@ -92,3 +92,44 @@ export const checkAvailability = query({
      };
   },
 });
+export const getUserTickets = query({
+  args: {
+    userId:v.string()
+  },
+  handler: async(ctx,{userId})=>{
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+    const tickets = await ctx.db
+      .query("tickets")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
+      const ticketsWithEvents = await Promise.all(
+        tickets.map(async(ticket)=>{
+          const event = await ctx.db.get(ticket.eventId);
+          return {
+            ...ticket, 
+            event
+          }
+        })
+      )
+      return ticketsWithEvents;
+  }
+})
+export const search = query({
+  args: { searchTerm: v.string() },
+  handler: async (ctx, { searchTerm }) => {
+    const events = await ctx.db
+      .query("events")
+      .filter((q) => q.eq(q.field("is_cancelled"), undefined))
+      .collect();
+      return events.filter(event=>{
+        const searchTermLower = searchTerm.toLocaleLowerCase();
+        return (
+          event.name.toLocaleLowerCase().includes(searchTermLower) ||
+          event.description.toLocaleLowerCase().includes(searchTermLower) ||
+          event.location.toLowerCase().includes(searchTermLower)
+        );
+      })
+  },
+});
